@@ -6,8 +6,8 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "lol",
-    "version": "0.0.0"
+    "productName": "diacritics-for-sanskrit-transliterations",
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
@@ -22,9 +22,10 @@
     },
     "windows": [
       {
-        "title": "lol",
-        "width": 800,
-        "height": 600
+        "title": "Diacritics For Sanskrit transliterations",
+        "width": 400,
+        "height": 300,
+        "visible": true
       }
     ],
     "security": {
@@ -33,14 +34,20 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.tauri.dev",
+      "identifier": "com.diacritics.dev",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
         "icons/128x128@2x.png",
         "icons/icon.icns",
         "icons/icon.ico"
-      ]
+      ],
+      "windows": {
+        "webviewInstallMode": {
+          "type": "embedBootstrapper"
+        }
+      }
+
     }
   }
 }
