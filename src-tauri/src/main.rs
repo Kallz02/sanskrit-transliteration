@@ -1,34 +1,892 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
-
+use std::time::{Instant, Duration};
+use std::sync::{Arc, Mutex};
 use enigo::{
     Enigo, Keyboard, Settings,
 };
+use inputbot::{handle_input_events, KeybdKey::* ,  BlockInput::*,};
+use std::thread;
 
-//use tauri::{Manager, Window};
-// Create the command:
-// This command must be async so that it doesn't run on the main thread.
-// ,
-      
-//     {
-//        "width": 400,
-//       "height": 200,
-//       "decorations": true,
-//       "url": "splash.html",
-//       "label": "loading"
-//    }
-// #[tauri::command]
-// async fn close_splashscreen(window: Window) {
-//   // Close splashscreen
-//   window.get_window("loading").expect("no window labeled 'loading' found").close().unwrap();
-//   // Show main window
-//   window.get_window("main").expect("no window labeled 'main' found").show().unwrap();
-// }
+
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+
+
 #[tauri::command]
-fn greet(name: &str) -> String {
-    dbg!(name);
-    format!("Hello, {}! You've been greeted from Rust!", name)
+fn bindevent(){
+        // inputbot::init_device();
+        let long_press_timeout = 100; // adjust this value to your liking
+        let binding_active = Arc::new(Mutex::new(false));
+        let enigo =  Arc::new(Mutex::new(Enigo::new(&Settings::default()).unwrap()));
+    
+    
+    
+        LControlKey.bind(move|| {
+            let start_time = Instant::now();
+            thread::sleep(Duration::from_millis(long_press_timeout));
+            let current_time = Instant::now();
+            if current_time.duration_since(start_time) >= Duration::from_millis(long_press_timeout) {
+                *binding_active.lock().unwrap() = true;
+                dbg!("Lctrl Long press detected");
+
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+
+AKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("AKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ā").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ā").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+DKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("DKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ḍ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ḍ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+HKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("HKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ḥ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ḥ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+IKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("IKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ī").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ī").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+LKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("LKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ḷ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ḷ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+MKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("MKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ṁ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ṁ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+NKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("NKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ṇ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ṇ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+GKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("GKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ṅ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ṅ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+JKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("JKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ñ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ñ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+RKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("RKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ṙ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ṙ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+EKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("EKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ṝ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ṝ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+SKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("SKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ṣ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ṣ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+ZKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("ZKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ś").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ś").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+TKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("TKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ṭ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ṭ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+UKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("UKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ū").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ū").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+              thread::spawn({
+        let binding_active = Arc::clone(&binding_active);
+        move || {
+            thread::sleep(Duration::from_millis(1000));
+            *binding_active.lock().unwrap() = false;
+            AKey.unbind();
+            DKey.unbind();
+            HKey.unbind();
+            IKey.unbind();
+            LKey.unbind();
+            MKey.unbind();
+            NKey.unbind();
+            GKey.unbind();
+            JKey.unbind();
+            RKey.unbind();
+            EKey.unbind();
+            SKey.unbind();
+            ZKey.unbind();
+            TKey.unbind();
+            UKey.unbind();
+        }
+    });
+    
+            }
+        });
+
+        let binding_active = Arc::new(Mutex::new(false));
+        let enigo =  Arc::new(Mutex::new(Enigo::new(&Settings::default()).unwrap()));
+    
+    
+    
+        RControlKey.bind(move|| {
+            let start_time = Instant::now();
+            thread::sleep(Duration::from_millis(long_press_timeout));
+            let current_time = Instant::now();
+            if current_time.duration_since(start_time) >= Duration::from_millis(long_press_timeout) {
+                *binding_active.lock().unwrap() = true;
+                dbg!("Lctrl Long press detected");
+
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+
+AKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("AKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ā").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ā").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+DKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("DKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ḍ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ḍ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+HKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("HKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ḥ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ḥ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+IKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("IKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ī").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ī").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+LKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("LKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ḷ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ḷ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+MKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("MKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ṁ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ṁ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+NKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("NKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ṇ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ṇ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+GKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("GKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ṅ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ṅ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+JKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("JKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ñ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ñ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+RKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("RKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ṙ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ṙ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+EKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("EKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ṝ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ṝ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+SKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("SKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ṣ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ṣ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+ZKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("ZKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ś").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ś").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+TKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("TKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ṭ").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ṭ").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+
+let binding_active_clone = Arc::clone(&binding_active);
+let enigo_clone = Arc::clone(&enigo);
+UKey.blockable_bind(move || {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let enigo = Arc::clone(&enigo_clone);
+        thread::spawn(move || {
+            let binding_active = binding_active.lock().unwrap();
+            let mut enigo = enigo.lock().unwrap();
+            if *binding_active {
+                dbg!("UKey pressed");
+                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                    enigo.text("ū").unwrap(); // send a when Caps Lock is off
+                } else {
+                    enigo.text("Ū").unwrap(); // send A when Caps Lock is on
+                }
+               
+              
+            }
+        });
+        Block
+    } else {
+        DontBlock
+    }
+});
+              thread::spawn({
+        let binding_active = Arc::clone(&binding_active);
+        move || {
+            thread::sleep(Duration::from_millis(1000));
+            *binding_active.lock().unwrap() = false;
+            AKey.unbind();
+            DKey.unbind();
+            HKey.unbind();
+            IKey.unbind();
+            LKey.unbind();
+            MKey.unbind();
+            NKey.unbind();
+            GKey.unbind();
+            JKey.unbind();
+            RKey.unbind();
+            EKey.unbind();
+            SKey.unbind();
+            ZKey.unbind();
+            TKey.unbind();
+            UKey.unbind();
+        }
+    });
+    
+            }
+        });
+    
+        handle_input_events();
 }
 
 
@@ -37,250 +895,8 @@ fn greet(name: &str) -> String {
 #[tauri::command]
 async fn press() {
     dbg!("Apploaded");
-   
-    
-}
+   }
 
-
-
-#[tauri::command]
-async fn press_a() {
-    dbg!("Pressed Ā");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("Ā").unwrap();
-    
-}
-
-#[tauri::command]
-async fn pressa() {
-    dbg!("Pressed ā");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("ā").unwrap();
-    
-}
-
-#[tauri::command]
-async fn pressd() {
-    dbg!("ḍ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("ḍ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn press_d() {
-    dbg!("Ḍ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("Ḍ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn pressh() {
-    dbg!("ḥ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("ḥ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn press_h() {
-    dbg!("Ḥ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("Ḥ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn pressi() {
-    dbg!("ī");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("ī").unwrap();
-    
-}
-
-#[tauri::command]
-async fn press_i() {
-    dbg!("Ī");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("Ī").unwrap();
-    
-}
-
-#[tauri::command]
-async fn pressl() {
-    dbg!("ḷ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("ḷ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn press_l() {
-    dbg!("Ḷ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("Ḷ").unwrap();
-    
-}
-#[tauri::command]
-async fn press_m() {
-    dbg!("Ṁ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("Ṁ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn pressm() {
-    dbg!("ṁ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("ṁ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn press_n() {
-    dbg!("Ṇ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("Ṇ").unwrap();
-    
-}
-#[tauri::command]
-async fn pressn() {
-    dbg!("ṇ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("ṇ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn press_g() {
-    dbg!("Ṅ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("Ṅ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn pressg() {
-    dbg!("ṅ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("ṅ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn press_j() {
-    dbg!("Ñ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("Ñ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn pressj() {
-    dbg!("ñ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("ñ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn press_r() {
-    dbg!("Ṙ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("Ṙ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn pressr() {
-    dbg!("ṙ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("ṙ").unwrap();
-    
-}
-
-
-#[tauri::command]
-async fn press_e() {
-    dbg!("Ṝ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("Ṝ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn presse() {
-    dbg!("ṝ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("ṝ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn press_s() {
-    dbg!("Ṣ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("Ṣ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn presss() {
-    dbg!("ṣ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("ṣ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn press_z() {
-    dbg!("Ś");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("Ś").unwrap();
-    
-}
-
-#[tauri::command]
-async fn pressz() {
-    dbg!("ś");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("ś").unwrap();
-    
-}
-
-#[tauri::command]
-async fn press_t() {
-    dbg!("Ṭ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("Ṭ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn presst() {
-    dbg!("ṭ");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("ṭ").unwrap();
-    
-}
-
-#[tauri::command]
-async fn press_u() {
-    dbg!("Ū");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("Ū").unwrap();
-    
-}
-
-#[tauri::command]
-async fn pressu() {
-    dbg!("ū");
-    let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text("ū").unwrap();
-    
-}
 
 
 
@@ -289,7 +905,7 @@ async fn pressu() {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet,press  , pressa ,  press_a , pressd , press_d , pressh , press_h, pressi , press_i , pressj , press_j ,pressl , press_l, pressm , press_m , pressn , press_n  , pressr , press_r , presss , press_s , presst , press_t , pressu , press_u , press_z , pressz , presse , press_e , pressg , press_g])
+        .invoke_handler(tauri::generate_handler![press  ,bindevent])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
