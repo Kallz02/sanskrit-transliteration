@@ -18,6 +18,15 @@
   font-weight: 700;
 }
 
+.cont {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cont a{
+  color: cyan;
+}
+
 table td,tr{
   border: white solid 1px;
   padding:  0px 5px;

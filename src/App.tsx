@@ -84,6 +84,15 @@ useEffect(() => {
       </tr>
    
      </table>
+    <div  className="cont">
+     <div className="">
+      <a href="mailto:akshay.pranav.kalathil@gmail.com">Contact</a> for additional characters
+     </div>
+     <div className="">
+    Code: <a target="_blank" href="https://github.com/Kallz02/sanskrit-transliteration">Github</a>
+
+     </div>
+     </div>
 
 
     </div>

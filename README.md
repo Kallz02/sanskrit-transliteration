@@ -1,7 +1,18 @@
-# Tauri + React + Typescript
+# Diacritics for Sanskrit Transliteration
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+It is a small desktop app which allows to easily type Diacritics on Windows using [Rust](https://www.rust-lang.org/) ,[Tauri](https://tauri.app/) , [InputBot](https://github.com/obv-mikhail/InputBot) and [Enigo](https://github.com/Enigo-rs/Enigo) 
 
-## Recommended IDE Setup
+![alt text](image.png)
+## How to Install 
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+- Go to [Releases](https://github.com/Kallz02/sanskrit-transliteration/releases)
+
+- Click on .Exe of Desire Version
+
+## Contact 
+
+Contact me for additional characters or if you face any issues
+
+Email: akshay.pranav.kalathil@gmail.com
+
+https://akshayk.dev/contact
