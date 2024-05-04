@@ -34,13 +34,14 @@ let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 
 AKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active=false;
                 dbg!("AKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ā").unwrap(); // send a when Caps Lock is off
@@ -60,13 +61,14 @@ AKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 DKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active=false;
                 dbg!("DKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ḍ").unwrap(); // send a when Caps Lock is off
@@ -86,13 +88,14 @@ DKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 HKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap(){
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active=false;
                 dbg!("HKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ḥ").unwrap(); // send a when Caps Lock is off
@@ -113,13 +116,14 @@ HKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 IKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active=false;
                 dbg!("IKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ī").unwrap(); // send a when Caps Lock is off
@@ -139,13 +143,14 @@ IKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 LKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active=false;
                 dbg!("LKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ḷ").unwrap(); // send a when Caps Lock is off
@@ -165,13 +170,14 @@ LKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 MKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active=false;
                 dbg!("MKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ṁ").unwrap(); // send a when Caps Lock is off
@@ -192,13 +198,14 @@ MKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 NKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active=false;
                 dbg!("NKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ṇ").unwrap(); // send a when Caps Lock is off
@@ -219,13 +226,14 @@ NKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 GKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active=false;
                 dbg!("GKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ṅ").unwrap(); // send a when Caps Lock is off
@@ -245,13 +253,14 @@ GKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 JKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap(){
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active=false;
                 dbg!("JKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ñ").unwrap(); // send a when Caps Lock is off
@@ -271,18 +280,19 @@ JKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 RKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap(){
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active=false;
                 dbg!("RKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
-                    enigo.text("ṙ").unwrap(); // send a when Caps Lock is off
+                    enigo.text("ṛ").unwrap(); // send a when Caps Lock is off
                 } else {
-                    enigo.text("Ṙ").unwrap(); // send A when Caps Lock is on
+                    enigo.text("Ṛ").unwrap(); // send A when Caps Lock is on
                 }
                
               
@@ -297,13 +307,14 @@ RKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 EKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active=false;
                 dbg!("EKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ṝ").unwrap(); // send a when Caps Lock is off
@@ -324,13 +335,14 @@ EKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 SKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active=false;
                 dbg!("SKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ṣ").unwrap(); // send a when Caps Lock is off
@@ -351,13 +363,14 @@ SKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 ZKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active=false;
                 dbg!("ZKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ś").unwrap(); // send a when Caps Lock is off
@@ -377,13 +390,14 @@ ZKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 TKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active=false;
                 dbg!("TKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ṭ").unwrap(); // send a when Caps Lock is off
@@ -403,13 +417,14 @@ TKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 UKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap(){
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active=false;
                 dbg!("UKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ū").unwrap(); // send a when Caps Lock is off
@@ -469,13 +484,14 @@ let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 
 AKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active  = false;
                 dbg!("AKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ā").unwrap(); // send a when Caps Lock is off
@@ -495,13 +511,14 @@ AKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 DKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active  =  false;
                 dbg!("DKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ḍ").unwrap(); // send a when Caps Lock is off
@@ -521,13 +538,14 @@ DKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 HKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed()  && *binding_active_clone.lock().unwrap(){
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active  =  false;
                 dbg!("HKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ḥ").unwrap(); // send a when Caps Lock is off
@@ -548,13 +566,14 @@ HKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 IKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active  =  false;
                 dbg!("IKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ī").unwrap(); // send a when Caps Lock is off
@@ -574,13 +593,14 @@ IKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 LKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active  =  false;
                 dbg!("LKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ḷ").unwrap(); // send a when Caps Lock is off
@@ -600,13 +620,14 @@ LKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 MKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active  =  false;
                 dbg!("MKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ṁ").unwrap(); // send a when Caps Lock is off
@@ -627,13 +648,14 @@ MKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 NKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active  =  false;
                 dbg!("NKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ṇ").unwrap(); // send a when Caps Lock is off
@@ -654,13 +676,14 @@ NKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 GKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active  =  false;
                 dbg!("GKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ṅ").unwrap(); // send a when Caps Lock is off
@@ -680,13 +703,14 @@ GKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 JKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active  =  false;
                 dbg!("JKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ñ").unwrap(); // send a when Caps Lock is off
@@ -706,18 +730,19 @@ JKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 RKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active  =  false;
                 dbg!("RKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
-                    enigo.text("ṙ").unwrap(); // send a when Caps Lock is off
+                    enigo.text("ṛ").unwrap(); // send a when Caps Lock is off
                 } else {
-                    enigo.text("Ṙ").unwrap(); // send A when Caps Lock is on
+                    enigo.text("Ṛ").unwrap(); // send A when Caps Lock is on
                 }
                
               
@@ -732,13 +757,14 @@ RKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 EKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active  =  false;
                 dbg!("EKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ṝ").unwrap(); // send a when Caps Lock is off
@@ -759,13 +785,14 @@ EKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 SKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active  =  false;
                 dbg!("SKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ṣ").unwrap(); // send a when Caps Lock is off
@@ -786,13 +813,14 @@ SKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 ZKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active  =  false;
                 dbg!("ZKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ś").unwrap(); // send a when Caps Lock is off
@@ -812,13 +840,14 @@ ZKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 TKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active  =  false;
                 dbg!("TKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ṭ").unwrap(); // send a when Caps Lock is off
@@ -838,13 +867,14 @@ TKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 UKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
-            let binding_active = binding_active.lock().unwrap();
+            let mut binding_active = binding_active.lock().unwrap();
             let mut enigo = enigo.lock().unwrap();
             if *binding_active {
+                *binding_active  =  false;
                 dbg!("UKey pressed");
                 if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
                     enigo.text("ū").unwrap(); // send a when Caps Lock is off

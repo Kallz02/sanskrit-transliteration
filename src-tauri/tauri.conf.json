@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "diacritics-for-sanskrit-transliterations",
-    "version": "0.0.2"
+    "version": "1.0.0"
   },
   "tauri": {
     "allowlist": {
@@ -22,7 +22,7 @@
     },
     "windows": [
       {
-        "title": "Diacritics For Sanskrit transliterations",
+        "title": "Diacritics For Sanskrit transliterations v1.0.0",
         "width": 400,
         "height": 300,
         "visible": true

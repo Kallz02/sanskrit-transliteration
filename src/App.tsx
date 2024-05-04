@@ -31,7 +31,7 @@ useEffect(() => {
     
   return (
     <div>
-     <div>Click and Release Ctrl key + Type Key</div>
+     <div>Click and Release Ctrl key (+) Type Key</div>
     
      <table>
       <tr>
@@ -43,8 +43,8 @@ useEffect(() => {
       <tr>
         <td>d 🠦 ḍ</td> 
         <td>D 🠦 Ḍ</td>
-        <td>r 🠦 ṙ</td> 
-        <td>R 🠦 Ṙ</td>  
+        <td>r 🠦 ṛ</td> 
+        <td>R 🠦 Ṛ</td>  
     
       </tr>
       <tr>
