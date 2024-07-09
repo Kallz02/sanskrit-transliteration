@@ -31,7 +31,7 @@ useEffect(() => {
     
   return (
     <div>
-     <div>Click and Release Ctrl key (+) Type Key</div>
+     <div>Click and Release Shift key (+) Type Key</div>
     
      <table>
       <tr>

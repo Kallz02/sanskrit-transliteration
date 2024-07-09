@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "diacritics-for-sanskrit-transliteration",
+    "productName": "diacritics-for-sanskrit-transliteration (Shift)",
     "version": "1.0.2"
   },
   "tauri": {
@@ -22,7 +22,7 @@
     },
     "windows": [
       {
-        "title": "Diacritics For Sanskrit transliterations v1.0.2",
+        "title": "Diacritics For Sanskrit transliterations v1.0.2 (Shift)",
         "width": 400,
         "height": 300,
         "visible": true

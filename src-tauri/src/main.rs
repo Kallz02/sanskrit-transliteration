@@ -15,13 +15,14 @@ use std::thread;
 #[tauri::command]
 fn bindevent(){
         // inputbot::init_device();
-        let long_press_timeout = 100; // adjust this value to your liking
+        let long_press_timeout = 10; // adjust this value to your liking
         let binding_active = Arc::new(Mutex::new(false));
         let enigo =  Arc::new(Mutex::new(Enigo::new(&Settings::default()).unwrap()));
     
     
-    
-        LControlKey.bind(move|| {
+
+        LShiftKey.bind(
+            move|| {
             let start_time = Instant::now();
             thread::sleep(Duration::from_millis(long_press_timeout));
             let current_time = Instant::now();
@@ -30,38 +31,93 @@ fn bindevent(){
                 dbg!("Lctrl Long press detected");
 
 
+
+// Capture the shared references
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
+                AKey.blockable_bind({
+                    let binding_active_clone = Arc::clone(&binding_active_clone);
+                    let enigo_clone = Arc::clone(&enigo_clone);
+                    move || {
+                        if !LControlKey.is_pressed()
+                            && !RControlKey.is_pressed()
+                            && !LShiftKey.is_pressed()
+                            && !RShiftKey.is_pressed()
+                            && *binding_active_clone.lock().unwrap()
+                        {
+                            let binding_active = Arc::clone(&binding_active_clone);
+                            let enigo = Arc::clone(&enigo_clone);
 
-AKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
-        let binding_active = Arc::clone(&binding_active_clone);
-        let enigo = Arc::clone(&enigo_clone);
-        thread::spawn(move || {
-            let mut binding_active = binding_active.lock().unwrap();
-            let mut enigo = enigo.lock().unwrap();
-            if *binding_active {
-                *binding_active=false;
-                dbg!("AKey pressed");
-                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
-                    enigo.text("ā").unwrap(); // send a when Caps Lock is off
-                } else {
-                    enigo.text("Ā").unwrap(); // send A when Caps Lock is on
-                }
-               
-              
-            }
-        });
-        Block
-    } else {
-        DontBlock
-    }
-});
+                            thread::spawn(move || {
+                                let mut binding_active = binding_active.lock().unwrap();
+                                let mut enigo = enigo.lock().unwrap();
+                                dbg!(*binding_active);
+                       
+                                if *binding_active {
+                                   
+                                    dbg!("AKey pressed");
+                                    if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                                        enigo.text("ā").unwrap(); // send ā when Caps Lock is off
+                                    } else {
+                                        enigo.text("Ā").unwrap(); // send Ā when Caps Lock is on
+                                    }
+                                }
+                                *binding_active = false;
+                            });
+                            Block
+                        } else {
+                            let mut binding_active = binding_active_clone.lock().unwrap();
+                            *binding_active = false;
+                            dbg!(*binding_active);
+                            DontBlock
+                        }
+                    }
+                });
 
-let binding_active_clone = Arc::clone(&binding_active);
-let enigo_clone = Arc::clone(&enigo);
+                HKey.blockable_bind({
+                    let binding_active_clone = Arc::clone(&binding_active_clone);
+                    let enigo_clone = Arc::clone(&enigo_clone);
+                
+                    move || {
+                        if !LControlKey.is_pressed()
+                            && !RControlKey.is_pressed()
+                            && !LShiftKey.is_pressed()
+                            && !RShiftKey.is_pressed()
+                            && *binding_active_clone.lock().unwrap()
+                        {
+                            let binding_active = Arc::clone(&binding_active_clone);
+                            let enigo = Arc::clone(&enigo_clone);
+
+                            thread::spawn(move || {
+                                let mut binding_active = binding_active.lock().unwrap();
+                                let mut enigo = enigo.lock().unwrap();
+                              
+                                dbg!(*binding_active);
+
+                                if *binding_active {
+                                    *binding_active = false;
+                                    dbg!("HKey pressed");
+                                    if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
+                                        enigo.text("ḥ").unwrap(); // send ḥ when Caps Lock is off
+                                    } else {
+                                        enigo.text("Ḥ").unwrap(); // send Ḥ when Caps Lock is on
+                                    }
+                                }
+                                *binding_active = false;
+                            });
+                            Block
+                        } else {
+                            let mut binding_active = binding_active_clone.lock().unwrap();
+                            *binding_active = false;
+                            dbg!(*binding_active);
+                            DontBlock
+                        }
+                    }
+                });
+
+
 DKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -78,45 +134,24 @@ DKey.blockable_bind(move || {
                
               
             }
+            *binding_active=false;
         });
         Block
     } else {
-        DontBlock
+        let mut binding_active = binding_active_clone.lock().unwrap();
+                            *binding_active = false;
+                            dbg!(*binding_active);
+                            DontBlock
     }
 });
 
-let binding_active_clone = Arc::clone(&binding_active);
-let enigo_clone = Arc::clone(&enigo);
-HKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap(){
-        let binding_active = Arc::clone(&binding_active_clone);
-        let enigo = Arc::clone(&enigo_clone);
-        thread::spawn(move || {
-            let mut binding_active = binding_active.lock().unwrap();
-            let mut enigo = enigo.lock().unwrap();
-            if *binding_active {
-                *binding_active=false;
-                dbg!("HKey pressed");
-                if !CapsLockKey.is_toggled() && !LShiftKey.is_pressed() && !RShiftKey.is_pressed() {
-                    enigo.text("ḥ").unwrap(); // send a when Caps Lock is off
-                } else {
-                    enigo.text("Ḥ").unwrap(); // send A when Caps Lock is on
-                }
-               
-              
-            }
-        });
-        Block
-    } else {
-        DontBlock
-    }
-});
+
 
 
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 IKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -136,6 +171,9 @@ IKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -143,7 +181,7 @@ IKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 LKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -163,6 +201,9 @@ LKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -170,7 +211,7 @@ LKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 MKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -190,6 +231,9 @@ MKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -198,7 +242,7 @@ MKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 NKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -218,6 +262,9 @@ NKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -226,7 +273,7 @@ NKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 GKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -246,6 +293,9 @@ GKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -253,7 +303,7 @@ GKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 JKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap(){
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -273,6 +323,9 @@ JKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -280,7 +333,7 @@ JKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 RKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap(){
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -300,6 +353,9 @@ RKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -307,7 +363,7 @@ RKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 EKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -327,6 +383,9 @@ EKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -335,7 +394,7 @@ EKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 SKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -355,6 +414,9 @@ SKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -363,7 +425,7 @@ SKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 ZKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -383,6 +445,9 @@ ZKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -390,7 +455,7 @@ ZKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 TKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -410,6 +475,9 @@ TKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -417,7 +485,7 @@ TKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 UKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap(){
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -437,6 +505,9 @@ UKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -471,7 +542,7 @@ UKey.blockable_bind(move || {
     
     
     
-        RControlKey.bind(move|| {
+        RShiftKey.bind(move|| {
             let start_time = Instant::now();
             thread::sleep(Duration::from_millis(long_press_timeout));
             let current_time = Instant::now();
@@ -484,7 +555,7 @@ let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 
 AKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -504,6 +575,9 @@ AKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -511,7 +585,7 @@ AKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 DKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -531,6 +605,9 @@ DKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -538,7 +615,7 @@ DKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 HKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed()  && *binding_active_clone.lock().unwrap(){
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -558,6 +635,9 @@ HKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -566,7 +646,7 @@ HKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 IKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -586,6 +666,9 @@ IKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -593,7 +676,7 @@ IKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 LKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -613,6 +696,9 @@ LKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -620,7 +706,7 @@ LKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 MKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -640,6 +726,9 @@ MKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -648,7 +737,7 @@ MKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 NKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -668,6 +757,9 @@ NKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -676,7 +768,7 @@ NKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 GKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -696,6 +788,9 @@ GKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -703,7 +798,7 @@ GKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 JKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -723,6 +818,9 @@ JKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -730,7 +828,7 @@ JKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 RKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -750,6 +848,9 @@ RKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -757,7 +858,7 @@ RKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 EKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -777,6 +878,9 @@ EKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -785,7 +889,7 @@ EKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 SKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -805,6 +909,9 @@ SKey.blockable_bind(move || {
         });
         Block
     } else {
+        let binding_active = Arc::clone(&binding_active_clone);
+        let mut binding_active = binding_active.lock().unwrap();
+        *binding_active=false;
         DontBlock
     }
 });
@@ -813,7 +920,7 @@ SKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 ZKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -833,6 +940,9 @@ ZKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -840,7 +950,7 @@ ZKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 TKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -860,6 +970,9 @@ TKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
@@ -867,7 +980,7 @@ TKey.blockable_bind(move || {
 let binding_active_clone = Arc::clone(&binding_active);
 let enigo_clone = Arc::clone(&enigo);
 UKey.blockable_bind(move || {
-    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && *binding_active_clone.lock().unwrap() {
+    if !LControlKey.is_pressed() && !RControlKey.is_pressed() && !LShiftKey.is_pressed()  && !RShiftKey.is_pressed() &&  *binding_active_clone.lock().unwrap() {
         let binding_active = Arc::clone(&binding_active_clone);
         let enigo = Arc::clone(&enigo_clone);
         thread::spawn(move || {
@@ -887,6 +1000,9 @@ UKey.blockable_bind(move || {
         });
         Block
     } else {
+        let mut binding_active = binding_active_clone.lock().unwrap();
+        *binding_active = false;
+        dbg!(*binding_active);
         DontBlock
     }
 });
