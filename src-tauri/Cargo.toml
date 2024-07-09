@@ -1,6 +1,6 @@
 [package]
 name = "diacritics"
-version = "1.0.1"
+version = "1.0.3"
 description = "A Windows Applet for typing sanskrit diacritics"
 authors = ["akshaykalathil"]
 edition = "2021"
