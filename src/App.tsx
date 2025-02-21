@@ -1,5 +1,5 @@
 import {  useEffect } from "react";
-import { invoke } from "@tauri-apps/api/tauri";
+import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 //import { register , unregisterAll } from "@tauri-apps/api/globalShortcut";
 

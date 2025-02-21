@@ -2,52 +2,42 @@
   "build": {
     "beforeDevCommand": "pnpm dev",
     "beforeBuildCommand": "pnpm build",
-    "devPath": "http://localhost:1420",
-    "distDir": "../dist"
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420"
   },
-  "package": {
-    "productName": "diacritics-for-sanskrit-transliteration",
-    "version": "1.0.2"
-  },
-  "tauri": {
-    "allowlist": {
-      "globalShortcut": {
-        "all": true 
-      },
-      "all": false,
-      "shell": {
-        "all": false,
-        "open": true
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "windows": {
+      "webviewInstallMode": {
+        "type": "embedBootstrapper"
       }
     },
-    "windows": [
-      {
-        "title": "Diacritics For Sanskrit transliterations v1.0.2",
-        "width": 400,
-        "height": 300,
-        "visible": true
-      }
-    ],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  },
+  "productName": "diacritics-for-sanskrit-transliteration",
+  "mainBinaryName": "diacritics-for-sanskrit-transliteration",
+  "version": "1.0.4",
+  "identifier": "com.diacritics.dev",
+  "plugins": {},
+  "app": {
     "security": {
       "csp": null
     },
-    "bundle": {
-      "active": true,
-      "targets": "all",
-      "identifier": "com.diacritics.dev",
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "windows": {
-        "webviewInstallMode": {
-          "type": "embedBootstrapper"
-        }
+    "windows": [
+      {
+        "title": "Diacritics For Sanskrit transliterations v1.0.4",
+        "width": 400,
+        "height": 300,
+        "visible": true,
+        "useHttpsScheme": true
       }
-
-    }
+    ]
   }
 }
